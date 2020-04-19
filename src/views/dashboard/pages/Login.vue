@@ -30,7 +30,7 @@
                   @click="loginwithmicrosoft"
                 >
                   <v-img
-                    src="@/assets/microsoft_logo.svg"
+                    src="https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31"
                     alt=""
                     max-width="100"
                     max-height="100"

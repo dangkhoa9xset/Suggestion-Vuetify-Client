@@ -14,6 +14,8 @@
       isLoggedIn: function () { return this.$store.getters.isLoggedIn },
     },
     created: async function () {
+      this.$store.commit('SET_DRAWER', false)
+      this.$store.commit('SET_APPBAR', false)
       const vm = this
       axios.interceptors.response.use(undefined, function (err) {
         return new Promise(function (resolve, reject) {
@@ -73,11 +75,12 @@
         localStorage.setItem('msToken', 'Bearer ' + accessToken)
         await this.$store.dispatch('loginwithmicrosoft', { accessToken })
           .then((response) => {
-            if (this.$router.currentRoute.name === 'Login') {
-              this.$router.push({ name: 'Dashboard' })
-            } else {
-              window.location.reload()
-            }
+            // if (this.$router.currentRoute.name === 'Login') {
+            //   this.$router.push({ name: 'Dashboard' })
+            // } else {
+            //   window.location.reload()
+            // }
+            setTimeout(() => window.location.reload(), 1000)
           })
           .catch(err => {
             throw err

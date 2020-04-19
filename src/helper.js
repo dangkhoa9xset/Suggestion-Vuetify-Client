@@ -1,4 +1,6 @@
 export const server = {
-    baseURL: 'http://localhost:3000/api',
-    callbackURL: 'https://suggestion-tetrapak.cf',
+    baseURL: 'https://backend-tetrapakbd.cf/api',
+    callbackURL: 'http://suggestion.tetrapakbd.cf/',
+    // baseURL: 'http://localhost:3000/api',
+    // callbackURL: 'http://localhost:8080/dashboard',
 }

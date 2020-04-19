@@ -43,7 +43,7 @@ Vue.use(msal, {
   auth: {
     clientId: 'e6c8b48b-cbab-433a-9b92-dcc7d4975435',
     tenantId: 'd2d2794a-61cc-4823-9690-8e288fd554cc',
-    redirectUri: `${server.callbackURL}/dashboard`,
+    redirectUri: `${server.callbackURL}`,
   },
   request: { // Group
     scopes: ['user.read', 'profile', 'offline_access'],

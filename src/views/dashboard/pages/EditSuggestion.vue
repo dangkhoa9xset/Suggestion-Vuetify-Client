@@ -331,6 +331,7 @@
 
     },
     created () {
+      this.$store.commit('SET_APPBAR', true)
       this.id = this.$route.params.id
       this.getSuggestion()
       var user = localStorage.getItem('user')

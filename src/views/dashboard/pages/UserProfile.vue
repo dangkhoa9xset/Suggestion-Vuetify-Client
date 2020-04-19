@@ -184,6 +184,7 @@
       roles: '',
     }),
     created () {
+      this.$store.commit('SET_APPBAR', true)
       var user = localStorage.getItem('user')
         ? JSON.parse(localStorage.getItem('user'))
         : []

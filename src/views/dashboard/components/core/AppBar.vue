@@ -129,6 +129,7 @@
       <v-list
         :tile="false"
         nav
+        max-width="350px"
       >
         <v-list-item>
           <v-list-item-avatar
@@ -157,6 +158,7 @@
           :key="accountoption"
         >
           <v-list-item-title
+            class="text-center"
             @click="onClick(accountoption)"
             v-text="accountoption"
           />

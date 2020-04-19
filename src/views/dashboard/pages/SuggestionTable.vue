@@ -1,102 +1,110 @@
 <template>
-  <v-container
-    id="suggestions-data"
-    fluid
-    tag="section"
-  >
-    <base-material-card
-      icon="mdi-clipboard-text"
-      title="All Suggestions List"
-      class="px-5 py-3"
+  <v-app id="inspire">
+    <v-container
+      id="suggestions-data"
+      fluid
+      tag="section"
     >
-      <v-data-table
-        :headers="headers"
-        :items="items"
-        :sort-desc="[false, true]"
-        multi-sort
-        :search="search"
-        :page.sync="page"
-        :items-per-page="itemsPerPage"
-        hide-default-footer
-        :loading="tableLoading"
-        loading-text="Loading... Please wait"
-        @page-count="pageCount = $event"
-        @click:row="details"
+      <base-material-card
+        icon="mdi-clipboard-text"
+        title="All Suggestions List"
+        class="px-5 py-3"
       >
-        <template v-slot:item.status="{ item }">
-          <v-chip
-            :color="getColor(item.status)"
-            dark
-          >
-            {{ item.status }}
-          </v-chip>
-        </template>
-        <template v-slot:item.actions="{ item }">
-          <v-icon
-            small
-            class="mr-2"
-            @click="editSuggestion(item)"
-          >
-            $mdiPencil
-          </v-icon>
-          <v-icon
-            small
-            @click="deleteSuggestion(item)"
-          >
-            $mdiDelete
-          </v-icon>
-        </template>
-      </v-data-table>
-      <div class="text-center pt-2">
-        <v-row
-          align="center"
-          justify="center"
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify "
+          label="Search"
+          single-line
+          hide-details
+        />
+        <v-data-table
+          :headers="headers"
+          :items="items"
+          :sort-desc="[false, true]"
+          multi-sort
+          :search="search"
+          :page.sync="page"
+          :items-per-page="itemsPerPage"
+          hide-default-footer
+          :loading="tableLoading"
+          loading-text="Loading... Please wait"
+          @page-count="pageCount = $event"
+          @click:row="details"
         >
-          <v-spacer />
-          <v-col
-            cols="12"
-            md="4"
+          <template v-slot:item.status="{ item }">
+            <v-chip
+              :color="getColor(item.status)"
+              dark
+            >
+              {{ item.status }}
+            </v-chip>
+          </template>
+          <template v-slot:item.actions="{ item }">
+            <v-icon
+              small
+              class="mr-2"
+              @click="editSuggestion(item)"
+            >
+              $mdiPencil
+            </v-icon>
+            <v-icon
+              small
+              @click="deleteSuggestion(item)"
+            >
+              $mdiDelete
+            </v-icon>
+          </template>
+        </v-data-table>
+        <div class="text-center pt-2">
+          <v-row
+            align="center"
+            justify="center"
           >
-            <v-pagination
-              v-model="page"
-              :length="pageCount"
-            />
-          </v-col>
-          <v-spacer />
-          <v-subheader>Items per page:</v-subheader>
-          <v-col
-            cols="12"
-            md="1"
-            class="pa-8"
-          >
-            <v-select
-              v-model="pageDefault"
-              :items="itemsPerPages "
-              @input="itemsPerPage = parseInt($event, 10)"
-            />
-          </v-col>
-        </v-row>
-      </div>
-    </base-material-card>
-    <v-dialog
-      v-model="dialog"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-    >
-      <v-card>
-        <v-toolbar
-          dark
-          color="primary"
-        >
-          <v-btn
-            icon
+            <v-spacer />
+            <v-col
+              cols="12"
+              md="4"
+            >
+              <v-pagination
+                v-model="page"
+                :length="pageCount"
+              />
+            </v-col>
+            <v-spacer />
+            <v-subheader>Items per page:</v-subheader>
+            <v-col
+              cols="12"
+              md="1"
+              class="pa-8"
+            >
+              <v-select
+                v-model="pageDefault"
+                :items="itemsPerPages "
+                @input="itemsPerPage = parseInt($event, 10)"
+              />
+            </v-col>
+          </v-row>
+        </div>
+      </base-material-card>
+      <v-dialog
+        v-model="dialog"
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
+      >
+        <v-card>
+          <v-toolbar
             dark
-            @click="dialog = false"
+            color="primary"
           >
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-toolbar-title>Suggestion Preview</v-toolbar-title>
+            <v-btn
+              icon
+              dark
+              @click="dialog = false"
+            >
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+            <v-toolbar-title>Suggestion Preview</v-toolbar-title>
           <!-- <v-spacer />
           <v-toolbar-items>
             <v-btn
@@ -107,32 +115,117 @@
               Edit
             </v-btn>
           </v-toolbar-items> -->
-        </v-toolbar>
-        <v-card-text>
-          <v-form>
-            <v-container class="py-0">
-              <v-divider
-                vertical
-              />
-              <v-row>
-                <v-col
-                  cols="12"
-                  md="6"
-                >
-                  <base-material-card
-                    color="blue lighten-3"
-                    class="px-5 py-3"
+          </v-toolbar>
+          <v-card-text>
+            <v-form>
+              <v-container class="py-0">
+                <v-divider
+                  vertical
+                />
+                <v-row>
+                  <v-col
+                    cols="12"
+                    md="6"
                   >
-                    <template v-slot:heading>
-                      <div class="display-2 font-weight-light">
-                        Suggestion Details
-                      </div>
+                    <base-material-card
+                      color="blue lighten-3"
+                      class="px-5 py-3"
+                    >
+                      <template v-slot:heading>
+                        <div class="display-2 font-weight-light">
+                          Suggestion Details
+                        </div>
 
-                      <div class="subtitle-1 font-weight-light">
-                        Basic infomation created on {{ editedItem.submitTime }}
-                      </div>
-                    </template>
-                    <v-card-text>
+                        <div class="subtitle-1 font-weight-light">
+                          Basic infomation created on {{ editedItem.submitTime }}
+                        </div>
+                      </template>
+                      <v-card-text>
+                        <v-simple-table>
+                          <template v-slot:default>
+                            <thead>
+                              <tr>
+                                <th class="text-left primary--text">
+                                  Calories
+                                </th>
+                                <th class="text-left primary--text">
+                                  Description
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td> Owner </td>
+                                <td>{{ editedItem.owner }}</td>
+                              </tr>
+                              <tr>
+                                <td> Owner Process </td>
+                                <td>{{ editedItem.owner_process }}</td>
+                              </tr>
+                              <tr>
+                                <td> Applied Process </td>
+                                <td>{{ editedItem.applied_process }}</td>
+                              </tr>
+                              <tr>
+                                <td> Area </td>
+                                <td>{{ editedItem.area }}</td>
+                              </tr>
+                              <tr>
+                                <td> Machine </td>
+                                <td>{{ editedItem.machine }}</td>
+                              </tr>
+                              <tr>
+                                <td> Catelogies </td>
+                                <td>{{ editedItem.categories.join(', ') }}</td>
+                              </tr>
+                              <tr>
+                                <td> Component </td>
+                                <td>{{ editedItem.component }}</td>
+                              </tr>
+                              <tr>
+                                <td> Suggestion Name </td>
+                                <td>{{ editedItem.suggestion_name }}</td>
+                              </tr>
+                              <tr>
+                                <td> Description </td>
+                                <td>{{ editedItem.description }}</td>
+                              </tr>
+                              <tr>
+                                <td> Benefit </td>
+                                <td>{{ editedItem.benefit }}</td>
+                              </tr>
+                              <tr>
+                                <td> Submit Time </td>
+                                <td>{{ editedItem.submitTime }}</td>
+                              </tr>
+                            </tbody>
+                          </template>
+                        </v-simple-table>
+                      </v-card-text>
+                    </base-material-card>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    md="6"
+                  >
+                    <base-material-card
+                      icon="mdi-scoreboard-outline"
+                      :title="totalScore"
+                      class="px-5 py-3"
+                    >
+                      <v-data-table
+                        hide-default-footer
+                        :headers="scoresheaders"
+                        :items="[editedItem]"
+                      />
+                    </base-material-card>
+                    <v-divider />
+                    <base-material-card
+                      :color="getColor(editedItem.status)"
+                      icon="mdi-file-eye-outline"
+                      :title="editedItem.status"
+                      class="px-5 py-3 mt-12"
+                    >
                       <v-simple-table>
                         <template v-slot:default>
                           <thead>
@@ -147,206 +240,122 @@
                           </thead>
                           <tbody>
                             <tr>
-                              <td> Owner </td>
-                              <td>{{ editedItem.owner }}</td>
+                              <td> CML </td>
+                              <td>{{ editedItem.cml }}</td>
                             </tr>
                             <tr>
-                              <td> Owner Process </td>
-                              <td>{{ editedItem.owner_process }}</td>
+                              <td> Approver </td>
+                              <td>{{ editedItem.approver }}</td>
                             </tr>
                             <tr>
-                              <td> Applied Process </td>
-                              <td>{{ editedItem.applied_process }}</td>
+                              <td> Approver comment </td>
+                              <td>{{ editedItem.comment }}</td>
                             </tr>
                             <tr>
-                              <td> Area </td>
-                              <td>{{ editedItem.area }}</td>
+                              <td> Approved Time </td>
+                              <td>{{ editedItem.approvedTime }}</td>
                             </tr>
                             <tr>
-                              <td> Machine </td>
-                              <td>{{ editedItem.machine }}</td>
+                              <td> Implemented by owner </td>
+                              <td>{{ editedItem.implementer }}</td>
                             </tr>
                             <tr>
-                              <td> Catelogies </td>
-                              <td>{{ editedItem.categories.join(', ') }}</td>
-                            </tr>
-                            <tr>
-                              <td> Component </td>
-                              <td>{{ editedItem.component }}</td>
-                            </tr>
-                            <tr>
-                              <td> Suggestion Name </td>
-                              <td>{{ editedItem.suggestion_name }}</td>
-                            </tr>
-                            <tr>
-                              <td> Description </td>
-                              <td>{{ editedItem.description }}</td>
-                            </tr>
-                            <tr>
-                              <td> Benefit </td>
-                              <td>{{ editedItem.benefit }}</td>
-                            </tr>
-                            <tr>
-                              <td> Submit Time </td>
-                              <td>{{ editedItem.submitTime }}</td>
+                              <td> Implemented Time </td>
+                              <td>{{ editedItem.implementedTime }}</td>
                             </tr>
                           </tbody>
                         </template>
                       </v-simple-table>
-                    </v-card-text>
-                  </base-material-card>
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="6"
+                    </base-material-card>
+                  </v-col>
+                </v-row>
+                <v-divider
+                  vertical
+                />
+                <base-material-card
+                  icon="mdi-file-multiple-outline"
+                  title="Attachments"
+                  class="px-5 py-3"
+                  color="blue"
                 >
-                  <base-material-card
-                    icon="mdi-scoreboard-outline"
-                    :title="totalScore"
-                    class="px-5 py-3"
-                  >
-                    <v-data-table
-                      hide-default-footer
-                      :headers="scoresheaders"
-                      :items="[editedItem]"
-                    />
-                  </base-material-card>
-                  <v-divider />
-                  <base-material-card
-                    :color="getColor(editedItem.status)"
-                    icon="mdi-file-eye-outline"
-                    :title="editedItem.status"
-                    class="px-5 py-3 mt-12"
-                  >
-                    <v-simple-table>
-                      <template v-slot:default>
-                        <thead>
-                          <tr>
-                            <th class="text-left primary--text">
-                              Calories
-                            </th>
-                            <th class="text-left primary--text">
-                              Description
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td> CML </td>
-                            <td>{{ editedItem.cml }}</td>
-                          </tr>
-                          <tr>
-                            <td> Approver </td>
-                            <td>{{ editedItem.approver }}</td>
-                          </tr>
-                          <tr>
-                            <td> Approver comment </td>
-                            <td>{{ editedItem.comment }}</td>
-                          </tr>
-                          <tr>
-                            <td> Approved Time </td>
-                            <td>{{ editedItem.approvedTime }}</td>
-                          </tr>
-                          <tr>
-                            <td> Implemented by owner </td>
-                            <td>{{ editedItem.implementer }}</td>
-                          </tr>
-                          <tr>
-                            <td> Implemented Time </td>
-                            <td>{{ editedItem.implementedTime }}</td>
-                          </tr>
-                        </tbody>
-                      </template>
-                    </v-simple-table>
-                  </base-material-card>
-                </v-col>
-              </v-row>
-              <v-divider
-                vertical
-              />
-              <base-material-card
-                icon="mdi-file-multiple-outline"
-                title="Attachments"
-                class="px-5 py-3"
-                color="blue"
-              >
-                <v-container fluid>
-                  <v-row>
-                    <v-col
-                      v-for="(attachment, n) of editedItem.attachments"
-                      :key="n"
-                      class="d-flex child-flex"
-                    >
-                      <v-card
-                        outlined
+                  <v-container fluid>
+                    <v-row>
+                      <v-col
+                        v-for="(attachment, n) of editedItem.attachments"
+                        :key="n"
+                        class="d-flex child-flex"
                       >
-                        <v-img
-                          :src="imageExistData[n]"
-                          :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-                          aspect-ratio="1"
-                          class="grey lighten-2"
+                        <v-card
+                          outlined
                         >
-                          <template v-slot:placeholder>
-                            <v-row
-                              class="fill-height ma-0"
-                              align="center"
-                              justify="center"
-                            >
-                              <v-progress-circular
-                                indeterminate
-                                color="grey lighten-5"
-                              />
-                            </v-row>
-                          </template>
-                        </v-img>
-                        <v-card-text class="caption">
-                          {{ editedfileName[n] }} ({{ (editedfileSize[n]/1024).toFixed(2) }}KB)
-                        </v-card-text>
-                        <v-card-actions>
-                          <v-spacer />
-                          <v-btn
-                            icon
-                            large
-                            :href="`http://localhost:3000/api/attachment/files/download/${attachment}`"
+                          <v-img
+                            :src="imageExistData[n]"
+                            :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+                            aspect-ratio="1"
+                            class="grey lighten-2"
                           >
-                            <v-icon>mdi-cloud-download-outline</v-icon>
-                          </v-btn>
-                          <v-spacer />
-                        </v-card-actions>
-                      </v-card>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </base-material-card>
-            </v-container>
-          </v-form>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-    <v-snackbar
-      v-model="snackbar"
-      :timeout="timeout"
-      top
-      color="error"
-    >
-      {{ snackbarText }}
-      <v-btn
-        v-show="deleteButton"
-        color="white"
-        text
-        @click="agree"
+                            <template v-slot:placeholder>
+                              <v-row
+                                class="fill-height ma-0"
+                                align="center"
+                                justify="center"
+                              >
+                                <v-progress-circular
+                                  indeterminate
+                                  color="grey lighten-5"
+                                />
+                              </v-row>
+                            </template>
+                          </v-img>
+                          <v-card-text class="caption">
+                            {{ editedfileName[n] }} ({{ (editedfileSize[n]/1024).toFixed(2) }}KB)
+                          </v-card-text>
+                          <v-card-actions>
+                            <v-spacer />
+                            <v-btn
+                              icon
+                              large
+                              :href="`http://localhost:3000/api/attachment/files/download/${attachment}`"
+                            >
+                              <v-icon>mdi-cloud-download-outline</v-icon>
+                            </v-btn>
+                            <v-spacer />
+                          </v-card-actions>
+                        </v-card>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </base-material-card>
+              </v-container>
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+      <v-snackbar
+        v-model="snackbar"
+        :timeout="timeout"
+        top
+        color="error"
       >
-        Delete
-      </v-btn>
-      <v-btn
-        color="white"
-        text
-        @click="cancel"
-      >
-        Close
-      </v-btn>
-    </v-snackbar>
-  </v-container>
+        {{ snackbarText }}
+        <v-btn
+          v-show="deleteButton"
+          color="white"
+          text
+          @click="agree"
+        >
+          Delete
+        </v-btn>
+        <v-btn
+          color="white"
+          text
+          @click="cancel"
+        >
+          Close
+        </v-btn>
+      </v-snackbar>
+    </v-container>
+  </v-app>
 </template>
 <script>
   import axios from 'axios'

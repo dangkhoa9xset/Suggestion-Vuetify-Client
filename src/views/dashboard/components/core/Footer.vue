@@ -29,11 +29,11 @@
           md="auto"
         >
           <div class="body-1 font-weight-light pt-6 pt-md-0 text-center">
-            &copy; 2020 belongs to <a href="https://www.creative-tim.com">Creative Tim</a>, made with
+            Copyright &copy; 2020, made with
             <v-icon size="18">
               mdi-heart
             </v-icon>
-            by khoa.phan.9xset@gmail.com for a better web.
+            by khoa.phan.9xset@gmail.com for a better job.
           </div>
         </v-col>
       </v-row>

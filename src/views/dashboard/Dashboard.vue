@@ -564,7 +564,6 @@
       }
     },
     created () {
-      this.$store.commit('SET_DRAWER', true)
       this.$store.commit('SET_APPBAR', true)
       this.tableLoading = true
       setTimeout(() => this.fetchSuggestions(), 1000)
