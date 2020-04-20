@@ -38,6 +38,7 @@
             >
               mdi-pencil
             </v-icon>
+
             <v-icon
               color="red"
               medium
@@ -484,7 +485,7 @@
           sortable: false,
           text: 'Status',
           value: 'status',
-          width: '10%',
+          width: '5%',
           align: 'center',
           class: 'primary--text',
         },
@@ -500,7 +501,7 @@
           sortable: false,
           text: 'Actions',
           value: 'actions',
-          width: '10%',
+          width: '15%',
           align: 'center',
           class: 'primary--text',
         },
