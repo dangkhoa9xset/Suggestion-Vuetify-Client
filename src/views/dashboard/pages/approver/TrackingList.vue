@@ -571,7 +571,7 @@
           sortable: false,
           text: 'Actions',
           value: 'actions',
-          width: '10%',
+          width: '15%',
           align: 'center',
           class: 'primary--text',
         },
